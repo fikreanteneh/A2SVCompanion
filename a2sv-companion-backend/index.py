@@ -17,7 +17,7 @@ import json
 import re
 from bson import json_util
 
-# load_dotenv()
+# load_dotenv('.env')
 
 
 MAIN_SHEETNAME = os.getenv("MAIN_SHEET_NAME")
@@ -49,10 +49,10 @@ CORS(app, support_credentials=True)
 def parse_json(data):
     return json.loads(json_util.dumps(data))
 
-def push_to_sheet(sheetName, cellReference, gitUrl, attempts):
+def push_to_sheet(sheetName, cellReference, gitUrl, attempts, timeTaken, timeTakenCell):
     url = (
         f"https://script.google.com/macros/s/{os.getenv('SHEET_APPSCRIPT_DEPLOYMENT')}/exec"
-        + f"?sheetName={sheetName}&cellReference={cellReference}&gitUrl={gitUrl}&attempts={attempts}"
+        + f"?sheetName={sheetName}&cellReference={cellReference}&gitUrl={gitUrl}&attempts={attempts}&timeTaken={timeTaken}$timeTakenCell={timeTakenCell}"
     )
 
     requests.get(url)
@@ -151,18 +151,9 @@ def api():
         f"{questionColumn}{studentRow}",
         json["gitUrl"],
         json["attempts"],
-    )
-
-    # ws.update_acell(
-    #     f"{questionColumn}{studentRow}",
-    #     f'SUBMISSION={json["gitUrl"]}={json["attempts"]}',
-    # )
-    # ws.format(f"{questionColumn}{studentRow}", {"horizontalAlignment": "RIGHT"})
-    ws.update_acell(
-        f"{timespentColumn}{studentRow}",
         json["timeTaken"],
+        f"{timespentColumn}{studentRow}",
     )
-    ws.format(f"{timespentColumn}{studentRow}", {"horizontalAlignment": "RIGHT"})
     return jsonify({"status": "OK"})
 
 
