@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body class="bg-gray-800 text-white">
+    <div class="flex flex-col mx-2 mb-3">
+        <div class="flex justify-between mb-1 items-center">
+            <div class="flex gap-2">
+                <img src="icons/icon_128.png" alt="" id="avatar" class="w-[30px] h-[30px] bg-gray-800 rounded-full">
+                <h1 id="greeting" class="font-bold text-lg">A2SV Companion</h1>
+            </div>
+            <button id="logout-btn"
+                class="hidden focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-3 py-2 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Log
+                out</button>
+        </div>
+    </div>
+
+    <div class="flex flex-col mx-2 gap-2 mb-2">
+        <div>
+            <label for="student-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name
+            </label>
+            <input type="text" id="student-name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Name on sheet" required>
+        </div>
+        <div>
+            <label for="repos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Repository</label>
+            <select name="" id="repos"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="">Select a repo</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="folder-path" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload
+                path</label>
+            <input type="text" id="folder-path"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="path/to/folder" required>
+        </div>
+    </div>
+
+  <div class="m-2 gap-1">
+        <button id="login-btn"
+            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg px-3 py-2 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 ">Login</button>
+
+        <button id="upload-btn"
+            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg px-3 py-2 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 hidden">Upload</button>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

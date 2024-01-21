@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #0f172a;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            color: white;
+            text-align: center;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .success {
+            color: #00ff00;
+        }
+
+        .failure {
+            color: #ff0000;
+        }
+    </style>
+</head>
+
+<body>
+    <input type='hidden' value='{{access_token}}' id='access_token'>
+
+    {% if success %}
+    <h1 class="success">{{message}}</h1>
+    {% else %}
+    <div>
+        <h1 class="failure">{{message}}</h1>
+        <p>Please, try again.</p>
+    </div>
+    {% endif %}
+
+</body>
+
+</html>
