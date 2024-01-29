@@ -23,7 +23,7 @@
   "content_scripts": [
     {
       "js": ["auth.content.js"],
-      "matches": ["https://a2sv-companion.vercel.app/*"],
+      "matches": ["https://a2sv-remote.onrender.com/*"],
       "run_at": "document_idle"
     },
     {
@@ -50,8 +50,7 @@
   "host_permissions": [
     "https://api.github.com/*",
     "https://github.com/*",
-    "https://a2sv-companion-dev.vercel.app/*",
-    "https://a2sv-companion.vercel.app/*",
+    "https://a2sv-remote.onrender.com/*",
     "https://leetcode.com/*",
     "http://localhost:5000/*"
   ]
