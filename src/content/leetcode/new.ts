@@ -16,6 +16,8 @@ const injectContent = (observer: MutationObserver, observe: () => void) => {
 
   const pushBtn = submitBtn.cloneNode(true) as HTMLButtonElement;
   const timeField = document.createElement('input') as HTMLInputElement;
+  pushBtn.style.opacity = '1';
+  pushBtn.style.cursor = 'pointer';
 
   const inputFieldClasses = [
     'block',
