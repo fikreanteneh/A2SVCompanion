@@ -1,4 +1,5 @@
-import config from '../../config';
+import config from "../../config";
+import { getLocalStorage } from "../../utils/readStorage";
 
 const pushToSheet = async (
   studentName: string,
@@ -6,25 +7,30 @@ const pushToSheet = async (
   timeTaken: number,
   questionUrl: string,
   platform: string,
-  gitUrl: string
-) => {
-  const response = await fetch(config.api.url, {
-    method: 'POST',
+  gitUrl: string,
+  code: string,
+  language: string
+): Promise<string> => {
+  const identifier = await getLocalStorage("identifier");
+  if (!identifier) return "Please login to A2SV Hub to Use this Feature";
+  const res = await fetch(config.a2svhub.url, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      studentName,
-      attempts,
-      timeTaken,
-      gitUrl,
-      questionUrl,
-      platform,
+      identifier: identifier,
+      tries: attempts,
+      time_spent: timeTaken,
+      code: code,
+      language: language,
+      link: questionUrl,
+      in_contest: false,
     }),
   });
-
-  if (response.status == 200) return true;
-  return false;
+  if (res.status == 200) return "Successfully Pushed Your Code";
+  const response = await res.text();
+  return response;
 };
 
 export default { pushToSheet };

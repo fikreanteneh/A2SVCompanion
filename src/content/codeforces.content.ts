@@ -1,26 +1,26 @@
-import { CodeforcesEvent } from '../events';
-import { CodeforcesSubmission } from '../lib/codeforce/types';
-import CodeforccesAPI from '../lib/codeforce/api';
-import { CodeforcesContentScript } from '../scripts';
+import { CodeforcesEvent } from "../events";
+import CodeforccesAPI from "../lib/codeforce/api";
+import { CodeforcesSubmission } from "../lib/codeforce/types";
+import { CodeforcesContentScript } from "../scripts";
 import {
   getSubmissionAnchors,
   getSubmissionDetail,
   getUserHandle,
-} from './codeforces/parseui';
+} from "./codeforces/parseui";
 
-const header = document.getElementById('header');
-const pushBtn = document.createElement('button');
+const header = document.getElementById("header");
+const pushBtn = document.createElement("button");
 
-header.insertBefore(pushBtn, header.querySelector('.lang-chooser'));
+header.insertBefore(pushBtn, header.querySelector(".lang-chooser"));
 
-pushBtn.style.position = 'absolute';
-pushBtn.style.top = '50%';
-pushBtn.style.right = '50%';
-pushBtn.style.transform = 'translateX(60%)';
+pushBtn.style.position = "absolute";
+pushBtn.style.top = "50%";
+pushBtn.style.right = "50%";
+pushBtn.style.transform = "translateX(60%)";
 
-pushBtn.innerText = 'Push Last Submission';
+pushBtn.innerText = "Push Last Submission";
 
-pushBtn.addEventListener('click', async () => {
+pushBtn.addEventListener("click", async () => {
   chrome.runtime.sendMessage(
     {
       from: CodeforcesContentScript,
@@ -31,7 +31,7 @@ pushBtn.addEventListener('click', async () => {
       const solutionAnchors = getSubmissionAnchors();
       const submissionAnchor = solutionAnchors.filter(
         (anchor) =>
-          anchor.getAttribute('submissionid') === response.id.toString()
+          anchor.getAttribute("submissionid") === response.id.toString()
       )[0];
       submissionAnchor.click();
     }
@@ -43,8 +43,8 @@ const hookSubmissionAnchors = () => {
   const solutionAnchors = getSubmissionAnchors();
 
   for (let anchor of solutionAnchors) {
-    anchor.addEventListener('click', async () => {
-      const submissionId = anchor.getAttribute('submissionid');
+    anchor.addEventListener("click", async () => {
+      const submissionId = anchor.getAttribute("submissionid");
       try {
         const { timeTaken, code, questionUrl } = await getSubmissionDetail(
           submissionId
@@ -68,14 +68,15 @@ const hookSubmissionAnchors = () => {
             submission,
           },
           (success) => {
-            if (success) {
-              alert('Pushed to sheet!');
-            } else {
-              alert('Failed to push to sheet!');
-            }
+            alert(success.status);
+            // if (success) {
+            //   alert('Pushed to sheet!');
+            // } else {
+            //   alert('Failed to push to sheet!');
+            // }
 
             (
-              document.getElementsByClassName('close')[0] as HTMLAnchorElement
+              document.getElementsByClassName("close")[0] as HTMLAnchorElement
             ).click();
           }
         );

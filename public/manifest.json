@@ -31,10 +31,14 @@
       "matches": ["https://leetcode.com/*"],
       "run_at": "document_idle"
     },
-
     {
       "js": ["codeforces.content.js"],
       "matches": ["https://codeforces.com/problemset/status*"],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["a2svhub.content.js"],
+      "matches": ["https://hub.a2sv.org/*"],
       "run_at": "document_idle"
     }
   ],

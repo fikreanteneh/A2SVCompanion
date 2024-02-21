@@ -1,8 +1,8 @@
-import { getLocalStorage } from '../../utils/readStorage';
-import { Octokit } from 'octokit';
+import { Octokit } from "octokit";
+import { getLocalStorage } from "../../utils/readStorage";
 
 export const getOctokit = async () => {
-  const token = await getLocalStorage('token');
+  const token = await getLocalStorage("token");
   return new Octokit({
     auth: token,
   });
@@ -18,7 +18,7 @@ export const getUser = async () => {
 
 export const getRepos = async () => {
   const octokit = await getOctokit();
-  const username = (await getLocalStorage('user')).login;
+  const username = (await getLocalStorage("user")).login;
   const repos = await octokit.paginate(
     octokit.rest.repos.listForAuthenticatedUser,
     {
@@ -32,7 +32,7 @@ export const getRepos = async () => {
 
 export const getRepoInfo = async (repository: string) => {
   const octokit = await getOctokit();
-  const username = (await getLocalStorage('user')).login;
+  const username = (await getLocalStorage("user")).login;
 
   const repo = await octokit.rest.repos.get({
     owner: username,
@@ -55,7 +55,7 @@ export const upload = async (
 
   var { repoOwner, repoName } = await getRepoInfo(repo);
 
-  if (relativePath[0] === '/') {
+  if (relativePath[0] === "/") {
     relativePath = relativePath.slice(1);
   }
 

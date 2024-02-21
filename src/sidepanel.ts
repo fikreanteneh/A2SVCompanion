@@ -1,8 +1,8 @@
 // Mock data for coding platforms and questions
-import { upload } from "./lib/github/index";
-import a2sv from "./lib/a2sv/index";
-import "./style.css";
 import config from "./config";
+import a2sv from "./lib/a2sv/index";
+import { upload } from "./lib/github/index";
+import "./style.css";
 interface PlatformData {
   platforms: string[];
 }
@@ -43,12 +43,11 @@ async function getQuestions(platform: string) {
 
   try {
     const data = await fetchData(
-      `${config.api.url}/platform/${platform}/question`,
+      `${config.api.url}/platform/${platform}/question`
     );
-    console.log(data);
     populateQuestionDropDown(
       "available-questions",
-      data.questions as QuestionInterface[],
+      data.questions as QuestionInterface[]
     );
     return data;
   } catch (error) {
@@ -68,7 +67,7 @@ async function getQuestions(platform: string) {
 function populateDropdown(
   selectId: string,
   options: string[],
-  selectedValue = "",
+  selectedValue = ""
 ) {
   const selectElement = document.getElementById(selectId) as HTMLSelectElement;
   selectElement.innerHTML = ""; // Clear existing options
@@ -88,9 +87,11 @@ interface QuestionInterface {
 
 function populateQuestionDropDown(
   selectId: string,
-  options: QuestionInterface[],
+  options: QuestionInterface[]
 ) {
-  options.sort((a, b) => { return a.Title.localeCompare(b.Title) });
+  options.sort((a, b) => {
+    return a.Title.localeCompare(b.Title);
+  });
   const selectElement = document.getElementById(selectId) as HTMLSelectElement;
   selectElement.innerHTML = ""; // Clear existing options
   options.forEach((option) => {
@@ -150,9 +151,8 @@ function checkFields() {
   const { codingPlatform, availableQuestions, code, timeTaken, attempts } =
     getFormValues();
   const submitButton = document.getElementById(
-    "submit-btn",
+    "submit-btn"
   ) as HTMLButtonElement;
-  console.log(submitButton);
   submitButton.disabled = !(
     codingPlatform &&
     availableQuestions &&
@@ -165,7 +165,7 @@ function checkFields() {
 
 function updateSubmitButtonStyle(disabled: boolean) {
   const submitButton = document.getElementById(
-    "submit-btn",
+    "submit-btn"
   ) as HTMLButtonElement;
   if (disabled) {
     submitButton.classList.remove("hover:bg-blue-600");
@@ -189,7 +189,7 @@ function onSubmit() {
     .then((storage) => {
       const ext = "py";
       const questionRef = document.getElementById(
-        "available-questions",
+        "available-questions"
       ) as HTMLSelectElement;
       let question = questionRef.options[
         questionRef.selectedIndex
@@ -206,7 +206,7 @@ function onSubmit() {
         storage.selectedRepo,
         fileRelativePath,
         formdata.code,
-        `Add solution for ${question}`,
+        `Add solution for ${question}`
       )
         .then((gitUrl) => {
           a2sv
@@ -217,6 +217,8 @@ function onSubmit() {
               formdata.availableQuestions,
               formdata.codingPlatform,
               gitUrl,
+              formdata.code,
+              "pyhon"
             )
             .then((result) => {
               // send notification
@@ -265,7 +267,6 @@ function onSubmit() {
 
 checkFields();
 document.getElementById("submit-btn").addEventListener("click", (e) => {
-  console.log("button clicked");
   e.preventDefault();
   onSubmit();
 });

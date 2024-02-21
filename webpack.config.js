@@ -1,53 +1,58 @@
-const CopyPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
-const path = require('path');
-const outputPath = 'dist';
+const path = require("path");
+const outputPath = "dist";
 const entryPoints = {
-  main: [path.resolve(__dirname, 'src', 'main.ts')],
-  services: path.resolve(__dirname, 'src', 'services.ts'),
-  'auth.content': path.resolve(__dirname, 'src', 'content/auth.content.ts'),
-  'leetcode.content': path.resolve(
+  main: [path.resolve(__dirname, "src", "main.ts")],
+  services: path.resolve(__dirname, "src", "services.ts"),
+  "auth.content": path.resolve(__dirname, "src", "content/auth.content.ts"),
+  "leetcode.content": path.resolve(
     __dirname,
-    'src',
-    'content/leetcode.content.ts'
+    "src",
+    "content/leetcode.content.ts"
   ),
-  'codeforces.content': path.resolve(
+  "codeforces.content": path.resolve(
     __dirname,
-    'src',
-    'content/codeforces.content.ts'
+    "src",
+    "content/codeforces.content.ts"
   ),
-  sidepanel: path.resolve(__dirname, 'src', 'sidepanel.ts')
+  "a2svhub.content": path.resolve(
+    __dirname,
+    "src",
+    "content/a2svhub.content.ts"
+  ),
+  sidepanel: path.resolve(__dirname, "src", "sidepanel.ts"),
 };
 module.exports = {
   entry: entryPoints,
   output: {
     path: path.join(__dirname, outputPath),
-    filename: '[name].js',
+    filename: "[name].js",
   },
   resolve: {
-    extensions: ['.ts', '.js'],
+    extensions: [".ts", ".js"],
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'ts-loader',
+        loader: "ts-loader",
         exclude: /node_modules/,
       },
       {
         test: /\.css$/,
-        include: path.resolve(__dirname, 'src'),
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        include: path.resolve(__dirname, "src"),
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
       {
         test: /\.(jpg|jpeg|png|gif|woff|woff2|eot|ttf|svg)$/i,
-        use: 'url-loader?limit=1024',
+        use: "url-loader?limit=1024",
       },
     ],
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: '.', to: '.', context: 'public' }],
+      patterns: [{ from: ".", to: ".", context: "public" }],
     }),
   ],
 };

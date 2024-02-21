@@ -1,19 +1,19 @@
-import { getLeetcodeVersion, removeContent } from './leetcode/common';
-import newUi from './leetcode/new';
-import oldUi from './leetcode/old';
+import { getLeetcodeVersion, removeContent } from "./leetcode/common";
+import newUi from "./leetcode/new";
+import oldUi from "./leetcode/old";
 
 const onMutation = (observer: MutationObserver) => {
   let hide = true;
 
   if (
-    window.location.href.includes('submissions') &&
-    window.location.href.includes('https://leetcode.com/problems/')
+    window.location.href.includes("submissions") &&
+    window.location.href.includes("https://leetcode.com/problems/")
   ) {
     hide = false;
   }
 
   try {
-    if (getLeetcodeVersion() === 'NEW') {
+    if (getLeetcodeVersion() === "NEW") {
       if (hide) {
         removeContent(observer, observe);
       } else {
@@ -26,9 +26,7 @@ const onMutation = (observer: MutationObserver) => {
         oldUi.injectContent(observer, observe);
       }
     }
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 };
 
 const mutationObserver: MutationObserver = new MutationObserver(() =>
@@ -40,7 +38,7 @@ const observe = () => {
     childList: true,
     subtree: true,
     attributes: true,
-    attributeFilter: ['class']
+    attributeFilter: ["class"],
   });
 };
 

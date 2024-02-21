@@ -1,8 +1,8 @@
-import { LeetcodeEvent } from '../events';
-import a2sv from '../lib/a2sv';
-import { upload } from '../lib/github';
-import Leetcode from '../lib/leetcode/api';
-import { getLeetcodeLangExtension } from '../utils/lang';
+import { LeetcodeEvent } from "../events";
+import a2sv from "../lib/a2sv";
+import { upload } from "../lib/github";
+import Leetcode from "../lib/leetcode/api";
+import { getLeetcodeLangExtension } from "../utils/lang";
 
 const push = async (message: any, sendResponse: (response?: any) => void) => {
   try {
@@ -15,28 +15,31 @@ const push = async (message: any, sendResponse: (response?: any) => void) => {
     const ext = getLeetcodeLangExtension(lang.name);
 
     const folderPath =
-      message.folderPath[message.folderPath.length - 1] == '/'
+      message.folderPath[message.folderPath.length - 1] == "/"
         ? message.folderPath
         : `${message.folderPath}/`;
     const fileRelativePath = `${folderPath}leetcode/${question.titleSlug}.${ext}`;
-
     upload(
       repo,
       fileRelativePath,
       code,
       `Add solution for ${question.title}`
     ).then((gitUrl) => {
-      a2sv.pushToSheet(
-        studentName,
-        tries,
-        timeTaken,
-        'https://leetcode.com/problems/' + question.titleSlug + '/',
-        'LeetCode',
-        gitUrl
-      );
+      a2sv
+        .pushToSheet(
+          studentName,
+          tries,
+          timeTaken,
+          "https://leetcode.com/problems/" + question.titleSlug + "/",
+          "LeetCode",
+          gitUrl,
+          code,
+          lang.name
+        )
+        .then((res) => {
+          sendResponse({ status: res });
+        });
     });
-
-    sendResponse({ status: 'success' });
   } catch (e) {
     sendResponse({ error: e.message });
     return;
@@ -53,7 +56,7 @@ const leetcodeHandler = (
   } else if (message.type === LeetcodeEvent.PUSH_LAST_SUBMISSION_TO_SHEETS) {
     const { questionSlug, timeTaken } = message;
     chrome.storage.local
-      .get(['selectedRepo', 'folderPath', 'studentName'])
+      .get(["selectedRepo", "folderPath", "studentName"])
       .then((storage) => {
         Leetcode.getLastAcceptedSubmissionId(questionSlug).then(
           (submissionId): void => {

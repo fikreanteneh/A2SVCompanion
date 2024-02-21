@@ -15,7 +15,7 @@ const logout = () => {
 
 const populateRepo = async (
   selector: HTMLSelectElement,
-  selected: string = "",
+  selected: string = ""
 ) => {
   const repos = await getRepos();
 
@@ -36,6 +36,8 @@ const studentName = document.getElementById("student-name");
 const greeting = document.getElementById("greeting");
 const folderField = document.getElementById("folder-path");
 const reposField = document.getElementById("repos") as HTMLSelectElement;
+const huberror = document.getElementById("huberror");
+const hubsuccess = document.getElementById("hubsuccess");
 
 chrome.storage.local.get(["token", "user"], async (result) => {
   if (result.token) {
@@ -45,7 +47,7 @@ chrome.storage.local.get(["token", "user"], async (result) => {
     greeting.classList.toggle("hidden", false);
     greeting.innerHTML = `${result.user.login}`;
 
-    const student = await getLocalStorage("studentName");
+    const identifier = await getLocalStorage("identifier");
     const selectedRepo = await getLocalStorage("selectedRepo");
     const folder = await getLocalStorage("folderPath");
 
@@ -53,8 +55,12 @@ chrome.storage.local.get(["token", "user"], async (result) => {
       folderField.setAttribute("value", folder);
     }
 
-    if (student) {
-      studentName.setAttribute("value", student);
+    // TODO
+    if (identifier) {
+      huberror.style.display = "none";
+    }
+    if (!identifier) {
+      hubsuccess.style.display = "none";
     }
 
     populateRepo(repoSelector as HTMLSelectElement, selectedRepo);
@@ -74,7 +80,7 @@ folderField.addEventListener("change", async (event) => {
   await chrome.storage.local.set({ folderPath });
 });
 
-studentName.addEventListener("change", async (event) => {
-  const studentName = (event.target as HTMLInputElement).value;
-  await chrome.storage.local.set({ studentName });
-});
+// studentName.addEventListener("change", async (event) => {
+//   const studentName = (event.target as HTMLInputElement).value;
+//   await chrome.storage.local.set({ studentName });
+// });

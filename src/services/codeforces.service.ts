@@ -1,9 +1,9 @@
-import { CodeforcesEvent } from '../events';
-import Codeforces from '../lib/codeforce/api';
-import A2SV from '../lib/a2sv/';
-import { CodeforcesSubmission } from '../lib/codeforce/types';
-import { upload } from '../lib/github';
-import { getCodeforcesLangExtenson } from '../utils/lang';
+import { CodeforcesEvent } from "../events";
+import A2SV from "../lib/a2sv/";
+import Codeforces from "../lib/codeforce/api";
+import { CodeforcesSubmission } from "../lib/codeforce/types";
+import { upload } from "../lib/github";
+import { getCodeforcesLangExtenson } from "../utils/lang";
 
 const push = async (
   codeforcesHandle: string,
@@ -11,30 +11,29 @@ const push = async (
   timeTaken: number,
   code: string,
   questionUrl: string,
-  onSuccess: () => void,
-  onFailure: () => void
+  sendResponse: (response?: any) => void
 ) => {
   chrome.storage.local
-    .get(['selectedRepo', 'folderPath', 'studentName'])
+    .get(["selectedRepo", "folderPath", "studentName"])
     .then((result) => {
       const { selectedRepo, folderPath, studentName } = result;
 
       const commitMsg = `Add solution for ${submission.problem.name}`;
 
-      let path = '';
+      let path = "";
       if (folderPath) {
-        if (folderPath[folderPath.length - 1] != '/') {
-          path = folderPath + '/';
+        if (folderPath[folderPath.length - 1] != "/") {
+          path = folderPath + "/";
         }
       }
 
       let filename = `${submission.problem.contestId}${
         submission.problem.index
       } ${submission.problem.name.replace(
-        ' ',
-        '-'
+        " ",
+        "-"
       )}.${getCodeforcesLangExtenson(submission.programmingLanguage)}`;
-      path += 'codeforces/' + filename;
+      path += "codeforces/" + filename;
 
       upload(selectedRepo, path, code, commitMsg).then((gitUrl) => {
         Codeforces.getTries(codeforcesHandle, submission.id)
@@ -44,12 +43,16 @@ const push = async (
               tries,
               timeTaken,
               questionUrl,
-              'Codeforces',
-              gitUrl
+              "Codeforces",
+              gitUrl,
+              code,
+              submission.programmingLanguage
             );
           })
-          .then(onSuccess)
-          .catch((e) => onFailure());
+          .then((res) => {
+            sendResponse({ status: res });
+          })
+          .catch((e) => sendResponse({ status: e.message }));
       });
     });
 };
@@ -72,8 +75,7 @@ const codeforcesHandler = (
       message.timeTaken,
       message.code,
       message.questionUrl,
-      () => sendResponse(true),
-      () => sendResponse(false)
+      sendResponse
     );
   }
 };
