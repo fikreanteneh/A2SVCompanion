@@ -41,7 +41,7 @@ const push = async (message: any, sendResponse: (response?: any) => void) => {
         });
     });
   } catch (e) {
-    sendResponse({ error: e.message });
+    sendResponse({ status: e.message });
     return;
   }
 };

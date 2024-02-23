@@ -67,21 +67,15 @@ const hookSubmissionAnchors = () => {
             questionUrl,
             submission,
           },
-          (success) => {
-            alert(success.status);
-            // if (success) {
-            //   alert('Pushed to sheet!');
-            // } else {
-            //   alert('Failed to push to sheet!');
-            // }
-
+          (result) => {
+            alert(result.status);
             (
               document.getElementsByClassName("close")[0] as HTMLAnchorElement
             ).click();
           }
         );
       } catch (e) {
-        return;
+        alert(e.message);
       }
     });
   }
