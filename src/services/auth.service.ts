@@ -1,5 +1,5 @@
-import { AuthEvent } from '../events';
-import { getUser } from '../lib/github';
+import { getUser } from "../lib/github";
+import { AuthEvent } from "../types/events";
 
 const authHandler = (
   message: any,
@@ -7,9 +7,9 @@ const authHandler = (
   sendResponse: (response?: any) => void
 ) => {
   if (message.type === AuthEvent.AUTH_SUCCESS) {
-    chrome.action.setBadgeText({ text: 'Success', tabId: sender.tab.id });
+    chrome.action.setBadgeText({ text: "Success", tabId: sender.tab.id });
     chrome.action.setBadgeBackgroundColor({
-      color: '#00ff00',
+      color: "#00ff00",
       tabId: sender.tab.id,
     });
 
@@ -21,15 +21,15 @@ const authHandler = (
         getUser().then((user) => {
           chrome.storage.local.set({
             user: user,
-            folderPath: '',
-            studentName: '',
+            folderPath: "",
+            studentName: "",
           });
         });
       });
   } else if (message.type === AuthEvent.AUTH_FAILURE) {
-    chrome.action.setBadgeText({ text: 'Failed', tabId: sender.tab.id });
+    chrome.action.setBadgeText({ text: "Failed", tabId: sender.tab.id });
     chrome.action.setBadgeBackgroundColor({
-      color: '#ff0200',
+      color: "#ff0200",
       tabId: sender.tab.id,
     });
   }

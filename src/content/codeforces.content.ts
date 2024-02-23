@@ -1,7 +1,7 @@
-import { CodeforcesEvent } from "../events";
 import CodeforccesAPI from "../lib/codeforce/api";
 import { CodeforcesSubmission } from "../lib/codeforce/types";
-import { CodeforcesContentScript } from "../scripts";
+import { CodeforcesEvent } from "../types/events";
+import { CodeforcesContentScript } from "../types/scripts";
 import {
   getSubmissionAnchors,
   getSubmissionDetail,

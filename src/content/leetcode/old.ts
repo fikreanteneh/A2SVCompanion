@@ -1,5 +1,5 @@
-import { LeetcodeEvent } from "../../events";
-import { LeetcodeContentScript } from "../../scripts";
+import { LeetcodeEvent } from "../../types/events";
+import { LeetcodeContentScript } from "../../types/scripts";
 
 const injectContent = (observer: MutationObserver, observe: () => void) => {
   if (document.getElementById("push-to-sheets-btn")) return;
@@ -47,17 +47,11 @@ const injectContent = (observer: MutationObserver, observe: () => void) => {
       {
         from: LeetcodeContentScript,
         type: LeetcodeEvent.PUSH_LAST_SUBMISSION_TO_SHEETS,
-        timeTaken: timeField.value,
+        timeTaken: +(timeField.value),
         questionSlug: window.location.pathname.split("/")[2],
       },
       (result) => {
-        // TODO: handle result
         alert(result.status);
-        // if (result.status === 'success') {
-        //   alert('Pushed to sheet!');
-        // } else {
-        //   alert('Failed to push to sheet!');
-        // }
         span.textContent = "Push Last Submission";
         pushBtn.disabled = false;
       }

@@ -1,18 +1,18 @@
 {
   "name": "a2sv-companion",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A2SV Browser Extension",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/meraf00/a2sv-companion.git"
+    "url": "git+https://github.com/fikreanteneh/A2SVCompanion.git"
   },
-  "author": "Leul Wujira",
+  "author": "Fikremariam Anteneh",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/meraf00/a2sv-companion/issues"
+    "url": "https://github.com/fikreanteneh/A2SVCompanion/issues"
   },
-  "homepage": "https://github.com/meraf00/a2sv-companion#readme",
+  "homepage": "https://github.com/fikreanteneh/A2SVCompanion#readme",
   "scripts": {
     "dev": "webpack --mode production --watch",
     "build": "webpack --mode production"

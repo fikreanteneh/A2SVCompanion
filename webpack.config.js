@@ -5,7 +5,7 @@ const outputPath = "dist";
 const entryPoints = {
   main: [path.resolve(__dirname, "src", "main.ts")],
   services: path.resolve(__dirname, "src", "services.ts"),
-  "auth.content": path.resolve(__dirname, "src", "content/auth.content.ts"),
+  // "auth.content": path.resolve(__dirname, "src", "content/auth.content.ts"),
   "leetcode.content": path.resolve(
     __dirname,
     "src",
@@ -21,7 +21,7 @@ const entryPoints = {
     "src",
     "content/a2svhub.content.ts"
   ),
-  sidepanel: path.resolve(__dirname, "src", "sidepanel.ts"),
+  // sidepanel: path.resolve(__dirname, "src", "sidepanel.ts"),
 };
 module.exports = {
   entry: entryPoints,

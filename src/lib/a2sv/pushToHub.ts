@@ -1,18 +1,10 @@
 import config from "../../config";
+import { PushToHubType } from "../../types/submissions";
 import { getLocalStorage } from "../../utils/readStorage";
 
-const pushToSheet = async (
-  studentName: string,
-  attempts: number,
-  timeTaken: number,
-  questionUrl: string,
-  platform: string,
-  gitUrl: string,
-  code: string,
-  language: string
-): Promise<string> => {
+const pushToHub = async (args: PushToHubType): Promise<string> => {
   const identifier = await getLocalStorage("identifier");
-  if (!identifier) return "Please login to A2SV Hub to Use this Feature";
+  if (!identifier) return "Please login to A2SV Hub to Use this App";
   const res = await fetch(config.a2svhub.url, {
     method: "POST",
     headers: {
@@ -20,11 +12,11 @@ const pushToSheet = async (
     },
     body: JSON.stringify({
       identifier: identifier,
-      tries: attempts,
-      time_spent: timeTaken,
-      code: code,
-      language: language,
-      link: questionUrl,
+      tries: args.attempts,
+      time_spent: args.timeTaken,
+      code: args.code,
+      language: args.language,
+      link: args.questionUrl,
       in_contest: false,
     }),
   });
@@ -33,4 +25,4 @@ const pushToSheet = async (
   return response;
 };
 
-export default { pushToSheet };
+export default pushToHub;

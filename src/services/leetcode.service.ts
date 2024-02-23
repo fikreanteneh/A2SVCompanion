@@ -1,79 +1,46 @@
-import { LeetcodeEvent } from "../events";
-import a2sv from "../lib/a2sv";
-import { upload } from "../lib/github";
+import pushToHub from "../lib/a2sv/pushToHub";
 import Leetcode from "../lib/leetcode/api";
-import { getLeetcodeLangExtension } from "../utils/lang";
+import { LeetcodeEvent } from "../types/events";
+import { LeetcodePushSubmission, LeetcodePushType } from "../types/submissions";
+// import { getLeetcodeLangExtension } from "../utils/lang";
 
-const push = async (message: any, sendResponse: (response?: any) => void) => {
+const push = async (message: LeetcodePushType) => {
   try {
-    const { submissionId, timeTaken, repo, studentName } = message;
+    const { submissionId, timeTaken } = message;
     const { question, lang, code, timestamp } =
       await Leetcode.getSubmissionDetails(submissionId);
-
     const tries = await Leetcode.getTries(question.titleSlug);
-
-    const ext = getLeetcodeLangExtension(lang.name);
-
-    const folderPath =
-      message.folderPath[message.folderPath.length - 1] == "/"
-        ? message.folderPath
-        : `${message.folderPath}/`;
-    const fileRelativePath = `${folderPath}leetcode/${question.titleSlug}.${ext}`;
-    upload(
-      repo,
-      fileRelativePath,
-      code,
-      `Add solution for ${question.title}`
-    ).then((gitUrl) => {
-      a2sv
-        .pushToSheet(
-          studentName,
-          tries,
-          timeTaken,
-          "https://leetcode.com/problems/" + question.titleSlug + "/",
-          "LeetCode",
-          gitUrl,
-          code,
-          lang.name
-        )
-        .then((res) => {
-          sendResponse({ status: res });
-        });
+    // const ext = getLeetcodeLangExtension(lang.name);
+    const result = await pushToHub({
+      timeTaken: timeTaken,
+      attempts: tries,
+      questionUrl: "https://leetcode.com/problems/" + question.titleSlug + "/",
+      platform: "LeetCode",
+      code: code,
+      language: lang.name,
     });
+    message.sendResponse({ status: result });
   } catch (e) {
-    sendResponse({ status: e.message });
-    return;
+    message.sendResponse({ status: e.message });
   }
 };
 
-const leetcodeHandler = (
-  message: any,
+const leetcodeHandler = async (
+  message: LeetcodePushSubmission,
   sender: chrome.runtime.MessageSender,
   sendResponse: (response?: any) => void
 ) => {
-  if (message.type === LeetcodeEvent.PUSH_TO_SHEETS) {
-    push(message, sendResponse);
-  } else if (message.type === LeetcodeEvent.PUSH_LAST_SUBMISSION_TO_SHEETS) {
-    const { questionSlug, timeTaken } = message;
-    chrome.storage.local
-      .get(["selectedRepo", "folderPath", "studentName"])
-      .then((storage) => {
-        Leetcode.getLastAcceptedSubmissionId(questionSlug).then(
-          (submissionId): void => {
-            push(
-              {
-                submissionId,
-                timeTaken,
-                repo: storage.selectedRepo,
-                folderPath: storage.folderPath,
-                studentName: storage.studentName,
-              },
-              sendResponse
-            );
-          }
-        );
-      });
+  if (message.type === LeetcodeEvent.PUSH_LAST_SUBMISSION_TO_SHEETS) {
+    const submissionId = await Leetcode.getLastAcceptedSubmissionId(
+      message.questionSlug
+    );
+    message.submissionId = submissionId;
   }
+  push({
+    timeTaken: message.timeTaken,
+    submissionId: message.submissionId,
+    sendResponse: sendResponse,
+  });
 };
 
 export default leetcodeHandler;

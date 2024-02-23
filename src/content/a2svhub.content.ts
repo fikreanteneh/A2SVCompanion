@@ -1,4 +1,4 @@
-import { A2SVHubContentScript } from "../scripts";
+import { A2SVHubContentScript } from "../types/scripts";
 
 export const extractIdentifier = async (): Promise<string | null> => {
   const identifier = window.localStorage.getItem("userIdentifier");

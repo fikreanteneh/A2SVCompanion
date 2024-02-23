@@ -48,7 +48,7 @@ export const getSubmissionDetail = async (submissionid: string) => {
 
   return new Promise<{
     code: string;
-    timeTaken: string;
+    timeTaken: number;
     questionUrl: string;
   }>((resolve, reject) => {
     if (!verdictCell) {
@@ -78,7 +78,7 @@ export const getSubmissionDetail = async (submissionid: string) => {
         showOnlyMySolutions(originalState);
         resolve({
           code: sourceCode,
-          timeTaken: timeTaken.value,
+          timeTaken: +(timeTaken.value),
           questionUrl,
         });
       });

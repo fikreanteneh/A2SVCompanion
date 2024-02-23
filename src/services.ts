@@ -1,15 +1,15 @@
+import a2svHubHandler from "./services/a2svhub.service";
+import authHandler from "./services/auth.service";
+import codeforcesHandler from "./services/codeforces.service";
+import leetcodeHandler from "./services/leetcode.service";
+import sidePanelHandler from "./services/sidepanel.service";
 import {
   A2SVHubContentScript,
   AuthContentScript,
   CodeforcesContentScript,
   LeetcodeContentScript,
   SidePanelScript,
-} from "./scripts";
-import a2svHubHandler from "./services/a2svhub.service";
-import authHandler from "./services/auth.service";
-import codeforcesHandler from "./services/codeforces.service";
-import leetcodeHandler from "./services/leetcode.service";
-import sidePanelHandler from "./services/sidepanel.service";
+} from "./types/scripts";
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.from === AuthContentScript) {

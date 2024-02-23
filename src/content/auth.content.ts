@@ -1,12 +1,12 @@
-import { AuthEvent } from '../events';
-import { AuthContentScript } from '../scripts';
+import { AuthEvent } from "../types/events";
+import { AuthContentScript } from "../types/scripts";
 
 export const extractToken = (): string | null => {
-  const accessToken = document.getElementById('access_token');
+  const accessToken = document.getElementById("access_token");
 
   if (accessToken) {
-    return accessToken.getAttribute('value') !== ''
-      ? accessToken.getAttribute('value')
+    return accessToken.getAttribute("value") !== ""
+      ? accessToken.getAttribute("value")
       : null;
   }
 

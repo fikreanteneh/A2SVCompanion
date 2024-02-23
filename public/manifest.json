@@ -9,9 +9,6 @@
     "48": "icons/icon_48.png",
     "128": "icons/icon_128.png"
   },
-  "side_panel": {
-    "default_path": "sidepanel.html"
-  },
   "action": {
     "default_popup": "index.html",
     "default_title": "A2SV Companion",
@@ -21,11 +18,6 @@
     "service_worker": "services.js"
   },
   "content_scripts": [
-    {
-      "js": ["auth.content.js"],
-      "matches": ["https://a2sv-remote.onrender.com/*"],
-      "run_at": "document_idle"
-    },
     {
       "js": ["leetcode.content.js"],
       "matches": ["https://leetcode.com/*"],

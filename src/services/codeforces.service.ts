@@ -1,64 +1,33 @@
-import { CodeforcesEvent } from "../events";
-import A2SV from "../lib/a2sv/";
+import pushToHub from "../lib/a2sv/pushToHub";
 import Codeforces from "../lib/codeforce/api";
-import { CodeforcesSubmission } from "../lib/codeforce/types";
-import { upload } from "../lib/github";
-import { getCodeforcesLangExtenson } from "../utils/lang";
+import { CodeforcesEvent } from "../types/events";
+import {
+  CodeforcesPushLastSubmission,
+  CodeforcesPushSubmission,
+  PushToCodeforcesType,
+} from "../types/submissions";
 
-const push = async (
-  codeforcesHandle: string,
-  submission: CodeforcesSubmission,
-  timeTaken: number,
-  code: string,
-  questionUrl: string,
-  sendResponse: (response?: any) => void
-) => {
-  chrome.storage.local
-    .get(["selectedRepo", "folderPath", "studentName"])
-    .then((result) => {
-      const { selectedRepo, folderPath, studentName } = result;
-
-      const commitMsg = `Add solution for ${submission.problem.name}`;
-
-      let path = "";
-      if (folderPath) {
-        if (folderPath[folderPath.length - 1] != "/") {
-          path = folderPath + "/";
-        }
-      }
-
-      let filename = `${submission.problem.contestId}${
-        submission.problem.index
-      } ${submission.problem.name.replace(
-        " ",
-        "-"
-      )}.${getCodeforcesLangExtenson(submission.programmingLanguage)}`;
-      path += "codeforces/" + filename;
-
-      upload(selectedRepo, path, code, commitMsg).then((gitUrl) => {
-        Codeforces.getTries(codeforcesHandle, submission.id)
-          .then((tries) => {
-            A2SV.pushToSheet(
-              studentName,
-              tries,
-              timeTaken,
-              questionUrl,
-              "Codeforces",
-              gitUrl,
-              code,
-              submission.programmingLanguage
-            );
-          })
-          .then((res) => {
-            sendResponse({ status: res });
-          })
-          .catch((e) => sendResponse({ status: e.message }));
-      });
+const push = async (message: PushToCodeforcesType) => {
+  try {
+    const tries = await Codeforces.getTries(message.codeforcesHandle, message.submission.id);
+    const result = await pushToHub({
+      attempts: tries,
+      questionUrl: message.questionUrl,
+      code: message.code,
+      platform: "Codeforces",
+      timeTaken: message.timeTaken,
+      language: message.submission.programmingLanguage,
     });
+    message.sendResponse({ status: result });
+  } catch (e) { 
+    message.sendResponse({ status: e.message });
+  }
+
 };
 
+
 const codeforcesHandler = (
-  message: any,
+  message: CodeforcesPushLastSubmission | CodeforcesPushSubmission,
   sender: chrome.runtime.MessageSender,
   sendResponse: (response?: any) => void
 ) => {
@@ -69,14 +38,15 @@ const codeforcesHandler = (
       }
     );
   } else if (message.type === CodeforcesEvent.PUSH_SUBMISSION_TO_SHEETS) {
-    push(
-      message.codeforcesHandle,
-      message.submission,
-      message.timeTaken,
-      message.code,
-      message.questionUrl,
-      sendResponse
-    );
+    const data = message as CodeforcesPushSubmission;
+    push({
+      codeforcesHandle: data.codeforcesHandle,
+      timeTaken: data.timeTaken,
+      submission: data.submission,
+      code: data.code,
+      questionUrl: data.questionUrl,
+      sendResponse,
+    });
   }
 };
 
