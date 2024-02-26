@@ -20,6 +20,7 @@ const push = async (message: PushToCodeforcesType) => {
       platform: "Codeforces",
       timeTaken: message.timeTaken,
       language: message.programmingLanguage,
+      submissionId: message.submissionId.toString(),
     });
     message.sendResponse({ status: result });
   } catch (e) {

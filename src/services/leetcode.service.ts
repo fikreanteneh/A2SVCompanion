@@ -18,6 +18,7 @@ const push = async (message: LeetcodePushType) => {
       platform: "LeetCode",
       code: code,
       language: lang.name,
+      submissionId: submissionId.toString(),
     });
     message.sendResponse({ status: result });
   } catch (e) {

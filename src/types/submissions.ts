@@ -40,6 +40,7 @@ platform: string;
   // gitUrl: string,
   code: string;
   language: string;
+  submissionId: string;
 };
 
 export type PushToCodeforcesType = {
