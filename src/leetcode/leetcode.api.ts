@@ -1,8 +1,6 @@
-import { getLeetcodeLangExtension } from '../../utils/lang';
-import { upload } from '../github';
-import { LeetcodeSubmissionStatus, LeecodeSubmissionDetail } from './types';
+import { LeetcodeSubmissionStatus, LeecodeSubmissionDetail } from './leetcode.types';
 
-const leetcodeRequest = async (body: any) => {
+export const leetcodeRequest = async (body: any) => {
   const response = await fetch('https://leetcode.com/graphql', {
     method: 'POST',
     headers: {
@@ -19,7 +17,7 @@ const leetcodeRequest = async (body: any) => {
   return null;
 };
 
-const getSubmissions = async (
+export const getSubmissions = async (
   questionSlug: string
 ): Promise<LeetcodeSubmissionStatus[]> => {
   const graphQL = JSON.stringify({
@@ -43,7 +41,7 @@ const getSubmissions = async (
   return [];
 };
 
-const getLastAcceptedSubmissionId = async (
+export const getLastAcceptedSubmissionId = async (
   questionSlug: string
 ): Promise<number | null> => {
   const submissions = await getSubmissions(questionSlug);
@@ -57,7 +55,7 @@ const getLastAcceptedSubmissionId = async (
   return null;
 };
 
-const getSubmissionDetails = async (
+export const getSubmissionDetails = async (
   submissionId: number
 ): Promise<LeecodeSubmissionDetail> => {
   const graphQL = JSON.stringify({
@@ -72,7 +70,7 @@ const getSubmissionDetails = async (
   return data;
 };
 
-const getTries = async (questionSlug: string) => {
+export const getTries = async (questionSlug: string) => {
   const submissions = await getSubmissions(questionSlug);
   let minAccepted = Infinity;
 
@@ -90,9 +88,3 @@ const getTries = async (questionSlug: string) => {
   return minAccepted !== Infinity ? tries : 0;
 };
 
-export default {
-  getSubmissions,
-  getSubmissionDetails,
-  getLastAcceptedSubmissionId,
-  getTries,
-};

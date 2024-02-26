@@ -1,22 +1,21 @@
-import { CodeforcesSubmission } from "./types";
+import { CodeforcesSubmission } from "./codeforces.types";
 
-const getSubmissions = async (codeforcesHandle: string) => {
+export const getSubmissions = async (codeforcesHandle: string) => {
   const response = await fetch(
-    `https://codeforces.com/api/user.status?handle=${codeforcesHandle}&from=1&count=30`
+    `https://codeforces.com/api/user.status?handle=${codeforcesHandle}&from=1&count=50`
   );
-
   if (response.status == 200) {
     const submissions = (await response.json())
       .result as CodeforcesSubmission[];
-
     return submissions;
   }
   return [];
 };
 
-const getLastSubmission = async (
+export const getLastSubmission = async (
   codeforcesHandle: string
 ): Promise<CodeforcesSubmission | null> => {
+  
   const submissions = await getSubmissions(codeforcesHandle);
 
   for (const submission of submissions) {
@@ -24,26 +23,23 @@ const getLastSubmission = async (
       return submission;
     }
   }
-
   return null;
 };
 
-const getSubmission = async (
+export const getSubmission = async (
   codeforcesHandle: string,
   submissionId: number
 ) => {
   const submissions = await getSubmissions(codeforcesHandle);
-
   for (let submission of submissions) {
     if (submission.id === submissionId) {
       return submission;
     }
   }
-
   return null;
 };
 
-const getTries = async (codeforcesHandle: string, submissionId: number) => {
+export const getTries = async (codeforcesHandle: string, submissionId: number) => {
   const submissions = await getSubmissions(codeforcesHandle);
 
   let contestId, problemIndex, creationTimeSeconds;
@@ -56,9 +52,7 @@ const getTries = async (codeforcesHandle: string, submissionId: number) => {
       break;
     }
   }
-
   let tries = 1;
-
   for (let submission of submissions) {
     if (
       submission.problem.contestId === contestId &&
@@ -73,9 +67,3 @@ const getTries = async (codeforcesHandle: string, submissionId: number) => {
   return tries;
 };
 
-export default {
-  getSubmissions,
-  getSubmission,
-  getLastSubmission,
-  getTries,
-};

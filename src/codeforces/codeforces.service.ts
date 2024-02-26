@@ -1,15 +1,15 @@
-import pushToHub from "../lib/a2sv/pushToHub";
-import Codeforces from "../lib/codeforce/api";
-import { CodeforcesEvent } from "../types/events";
+import { pushToHub } from "../a2sv/a2sv.api";
+import { getLastSubmission, getTries } from "./codeforces.api";
+import { CodeforcesEvent } from "./codeforces.message";
 import {
   CodeforcesPushLastSubmission,
   CodeforcesPushSubmission,
-  PushToCodeforcesType,
-} from "../types/submissions";
+  CodeforcesPushType,
+} from "./codeforces.types";
 
-const push = async (message: PushToCodeforcesType) => {
+const push = async (message: CodeforcesPushType) => {
   try {
-    const tries = await Codeforces.getTries(
+    const tries = await getTries(
       message.codeforcesHandle,
       message.submissionId
     );
@@ -34,7 +34,7 @@ const codeforcesHandler = (
   sendResponse: (response?: any) => void
 ) => {
   if (message.type === CodeforcesEvent.GET_LAST_SUBMISSION) {
-    Codeforces.getLastSubmission(message.codeforcesHandle).then(
+    getLastSubmission(message.codeforcesHandle).then(
       (submission) => {
         sendResponse(submission);
       }

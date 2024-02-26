@@ -5,23 +5,21 @@ const outputPath = "dist";
 const entryPoints = {
   main: [path.resolve(__dirname, "src", "main.ts")],
   services: path.resolve(__dirname, "src", "services.ts"),
-  // "auth.content": path.resolve(__dirname, "src", "content/auth.content.ts"),
   "leetcode.content": path.resolve(
     __dirname,
     "src",
-    "content/leetcode.content.ts"
+    "leetcode/leetcode.content.ts"
   ),
   "codeforces.content": path.resolve(
     __dirname,
     "src",
-    "content/codeforces.content.ts"
+    "codeforces/codeforces.content.ts"
   ),
   "a2svhub.content": path.resolve(
     __dirname,
     "src",
-    "content/a2svhub.content.ts"
+    "a2sv/a2sv.content.ts"
   ),
-  // sidepanel: path.resolve(__dirname, "src", "sidepanel.ts"),
 };
 module.exports = {
   entry: entryPoints,
