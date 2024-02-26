@@ -1,5 +1,4 @@
-import { CodeforcesEvent } from "../../types/events";
-import { CodeforcesContentScript } from "../../types/scripts";
+import { CodeforcesContentScript, CodeforcesEvent } from "./codeforces.message";
 
 export const getSubmissionAnchors = () => {
   return [].slice.call(

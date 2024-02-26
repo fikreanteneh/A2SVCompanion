@@ -1,5 +1,5 @@
-import { LeetcodeEvent } from "../../types/events";
-import { LeetcodeContentScript } from "../../types/scripts";
+import { LeetcodeEvent } from "../leetcode.message";
+import { LeetcodeContentScript } from "../leetcode.message";
 
 const injectContent = (observer: MutationObserver, observe: () => void) => {
   if (document.getElementById("push-to-sheets-btn")) return;

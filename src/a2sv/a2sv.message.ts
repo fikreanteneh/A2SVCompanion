@@ -1,0 +1,1 @@
+export const A2SVHubContentScript = "a2sv-hub";

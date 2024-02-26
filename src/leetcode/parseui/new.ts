@@ -1,17 +1,19 @@
-import { LeetcodeEvent } from "../../types/events";
-import { LeetcodeContentScript } from "../../types/scripts";
+import { LeetcodeContentScript, LeetcodeEvent } from "../leetcode.message";
 
 const getSubmitBtn = () => {
   const btns = [].slice.call(
     document.querySelectorAll("button")
   ) as HTMLButtonElement[];
-  const btn = btns.filter((btn) => btn.lastChild.textContent === "Solution")[0];
+  const btn = btns.filter(
+    (btn) =>
+      // btn.lastChild.textContent === "Solution"
+      btn.getAttribute("data-e2e-locator") === "console-submit-button"
+  )[0];
   return btn ?? null;
 };
 
 const injectContent = (observer: MutationObserver, observe: () => void) => {
   if (document.getElementById("push-to-sheets-btn")) return;
-
   const submitBtn = getSubmitBtn();
 
   const pushBtn = submitBtn.cloneNode(true) as HTMLButtonElement;
@@ -98,8 +100,11 @@ const injectContent = (observer: MutationObserver, observe: () => void) => {
   });
 
   observer.disconnect();
-  submitBtn.parentNode.insertBefore(timeField, submitBtn.nextSibling);
-  submitBtn.parentNode.insertBefore(pushBtn, timeField.nextSibling);
+  // parentNode = submitBtn.parentNode;
+  const parent = submitBtn.parentNode.parentNode;
+
+  parent.insertBefore(timeField, submitBtn.nextSibling);
+  parent.insertBefore(pushBtn, timeField.nextSibling);
   observe();
 };
 

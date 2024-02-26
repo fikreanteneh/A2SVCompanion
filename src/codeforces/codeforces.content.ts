@@ -2,7 +2,7 @@ import {
   getSubmissionDetail,
   getSubmissionAnchors as getSubmissionRows,
   getUserHandle,
-} from "./codeforces/parseui";
+} from "./codeforces.parseui";
 
 // const header = document.getElementById("header");
 // const pushBtn = document.createElement("button");
@@ -36,7 +36,6 @@ import {
 
 const hookSubmissionAnchors = () => {
   const codeforceHandle = getUserHandle();
-  // get submission anchors to click on the one with the given submissionid
   const solutionRows = getSubmissionRows();
   for (let row of solutionRows) {
     const cols = [].slice.call(row.children) as HTMLTableColElement[];

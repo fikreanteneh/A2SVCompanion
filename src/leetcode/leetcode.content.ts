@@ -1,6 +1,6 @@
-import { getLeetcodeVersion, removeContent } from "./leetcode/common";
-import newUi from "./leetcode/new";
-import oldUi from "./leetcode/old";
+import { getLeetcodeVersion, removeContent } from "./parseui/common";
+import newUi from "./parseui/new";
+import oldUi from "./parseui/old";
 
 const onMutation = (observer: MutationObserver) => {
   let hide = true;
