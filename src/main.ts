@@ -41,13 +41,10 @@ const hubsuccess = document.getElementById("hubsuccess");
 
 chrome.storage.local.get(["identifier"], (result) => {
   const identifier = result.identifier;
-  console.log("identifier", identifier);
   if (identifier) {
-    console.log("Yesssss");
     huberror.style.display = "none";
   }
   if (!identifier) {
-    console.log("Nooooo");
     hubsuccess.style.display = "none";
   }
 })

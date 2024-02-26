@@ -9,22 +9,23 @@ import {
 
 const push = async (message: PushToCodeforcesType) => {
   try {
-    const tries = await Codeforces.getTries(message.codeforcesHandle, message.submission.id);
+    const tries = await Codeforces.getTries(
+      message.codeforcesHandle,
+      message.submissionId
+    );
     const result = await pushToHub({
       attempts: tries,
       questionUrl: message.questionUrl,
       code: message.code,
       platform: "Codeforces",
       timeTaken: message.timeTaken,
-      language: message.submission.programmingLanguage,
+      language: message.programmingLanguage,
     });
     message.sendResponse({ status: result });
-  } catch (e) { 
+  } catch (e) {
     message.sendResponse({ status: e.message });
   }
-
 };
-
 
 const codeforcesHandler = (
   message: CodeforcesPushLastSubmission | CodeforcesPushSubmission,
@@ -42,9 +43,10 @@ const codeforcesHandler = (
     push({
       codeforcesHandle: data.codeforcesHandle,
       timeTaken: data.timeTaken,
-      submission: data.submission,
       code: data.code,
       questionUrl: data.questionUrl,
+      submissionId: data.submissioId,
+      programmingLanguage: data.programmingLanguage,
       sendResponse,
     });
   }

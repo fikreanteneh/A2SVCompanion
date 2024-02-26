@@ -1,5 +1,3 @@
-import { CodeforcesSubmission } from "../lib/codeforce/types";
-
 export interface Messaging {
   from: string;
   type: string;
@@ -19,7 +17,9 @@ export interface CodeforcesPushSubmission extends CodeforcesPushLastSubmission {
   code: string;
   timeTaken: number;
   questionUrl: string;
-  submission: CodeforcesSubmission;
+  // submission: CodeforcesSubmission;
+  submissioId: number;
+  programmingLanguage: string;
 }
 
 export type LeetcodePushType = {
@@ -36,7 +36,7 @@ export type PushToHubType = {
   attempts: number;
   timeTaken: number;
   questionUrl: string;
-  platform: string;
+platform: string;
   // gitUrl: string,
   code: string;
   language: string;
@@ -44,9 +44,11 @@ export type PushToHubType = {
 
 export type PushToCodeforcesType = {
   codeforcesHandle: string;
-  submission: CodeforcesSubmission;
+  // submission: CodeforcesSubmission;
   timeTaken: number;
   code: string;
   questionUrl: string;
+  submissionId: number;
+  programmingLanguage: string;
   sendResponse: (response?: any) => void;
 };

@@ -25,7 +25,12 @@
     },
     {
       "js": ["codeforces.content.js"],
-      "matches": ["https://codeforces.com/problemset/status*"],
+      "matches": [
+        "https://codeforces.com/problemset/status*",
+        "https://codeforces.com/contest/*/my",
+        "https://codeforces.com/contest/*/status",
+        "https://codeforces.com/submissions/*"
+      ],
       "run_at": "document_idle"
     },
     {

@@ -1,8 +1,8 @@
-import { CodeforcesSubmission } from './types';
+import { CodeforcesSubmission } from "./types";
 
 const getSubmissions = async (codeforcesHandle: string) => {
   const response = await fetch(
-    `https://codeforces.com/api/user.status?handle=${codeforcesHandle}`
+    `https://codeforces.com/api/user.status?handle=${codeforcesHandle}&from=1&count=30`
   );
 
   if (response.status == 200) {
@@ -20,7 +20,7 @@ const getLastSubmission = async (
   const submissions = await getSubmissions(codeforcesHandle);
 
   for (const submission of submissions) {
-    if (submission.verdict === 'OK') {
+    if (submission.verdict === "OK") {
       return submission;
     }
   }
@@ -63,7 +63,7 @@ const getTries = async (codeforcesHandle: string, submissionId: number) => {
     if (
       submission.problem.contestId === contestId &&
       submission.problem.index === problemIndex &&
-      submission.verdict !== 'OK' &&
+      submission.verdict !== "OK" &&
       submission.creationTimeSeconds < creationTimeSeconds
     ) {
       tries++;
