@@ -12,8 +12,6 @@ export interface LeecodeSubmissionDetail {
   timestamp: string;
 }
 
-
-
 export interface LeetcodePushSubmission {
   from: string;
   type: string;
@@ -22,10 +20,10 @@ export interface LeetcodePushSubmission {
   submissionId: number | null;
 }
 
-
 export type LeetcodePushType = {
-  submissionId: number;
   timeTaken: number;
+  submissionId: number | null;
+  questionSlug: string;
   // repo: string;
   // folderPath: string;
   // studentName: string;

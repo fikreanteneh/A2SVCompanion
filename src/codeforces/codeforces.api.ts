@@ -2,7 +2,7 @@ import { CodeforcesSubmission } from "./codeforces.types";
 
 export const getSubmissions = async (codeforcesHandle: string) => {
   const response = await fetch(
-    `https://codeforces.com/api/user.status?handle=${codeforcesHandle}&from=1&count=50`
+    `https://codeforces.com/api/user.status?handle=${codeforcesHandle}`
   );
   if (response.status == 200) {
     const submissions = (await response.json())

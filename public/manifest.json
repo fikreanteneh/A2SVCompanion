@@ -51,8 +51,8 @@
   "host_permissions": [
     "https://api.github.com/*",
     "https://github.com/*",
-    "https://a2sv-remote.onrender.com/*",
     "https://leetcode.com/*",
-    "http://localhost:5000/*"
+    "https://codeforces.com/*",
+    "https://hub.a2sv.org/*"
   ]
 }

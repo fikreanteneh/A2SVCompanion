@@ -41,13 +41,12 @@ export const getSubmissions = async (
   return [];
 };
 
-export const getLastAcceptedSubmissionId = async (
-  questionSlug: string
-): Promise<number | null> => {
-  const submissions = await getSubmissions(questionSlug);
+export const getLastAcceptedSubmissionId = (
+  submissions: LeetcodeSubmissionStatus[]
+): number | null => {
 
   for (let submission of submissions) {
-    if (submission.statusDisplay === 'Accepted') {
+    if (submission.statusDisplay === "Accepted") {
       return parseInt(submission.id);
     }
   }
@@ -70,12 +69,17 @@ export const getSubmissionDetails = async (
   return data;
 };
 
-export const getTries = async (questionSlug: string) => {
-  const submissions = await getSubmissions(questionSlug);
+export const getTries = (submissions: LeetcodeSubmissionStatus[]) => {
+  // let tries = 1;
+  // for (let submission of submissions) {
+  //   if (submission.statusDisplay !== "Accepted") tries++;
+  // }
+  // return tries;
+
   let minAccepted = Infinity;
 
   for (let submission of submissions) {
-    if (submission.statusDisplay === 'Accepted')
+    if (submission.statusDisplay === "Accepted")
       minAccepted = Math.min(minAccepted, parseInt(submission.timestamp));
   }
 
