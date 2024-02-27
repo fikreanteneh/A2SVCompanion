@@ -2,55 +2,51 @@
 
 ## Build
 
-- Clone the repo and run `npm install` to install the dependencies 
+- Clone the repo and run `npm install` to install the dependencies
 - `npm run build`
 - Load the extension from `dist` folder
 - Zip the content of `dist` folder for deployment
 
-
-## Overview
-
-- Repo for the [A2SV Companion backend](https://github.com/meraf00/a2sv-companion-backend)
-
 ### Authentication
 
-- Uses github oatuh web application flow to authenticate user
-- Companion initiates the authentication flow by redirecting the user to the github oauth page
-- A2SV-backend handles the authentication and returns the access token
-- Companion uses retured github access token
+- Uses A2SV Hub for authentication
+- When logging to A2SV Hub it automatically authenticate the user in the background
+- Link to A2SV Hub: [A2SV Hub](https://hub.a2sv.org/)
+
+### Codeforces, Leetcode, A2SV
+
+- Evrything related to codeforces is found in `src/codeforces` folder
+- Evrything related to leetcode is found in `src/leetcode` folder
+- Evrything related to a2svhub is found in `src/a2sv` folder
 
 ### Content
 
 - Anything related to injection/parsing of content
 - Separeted by the platform
-  - auth for parsing responses of the backend
-  - leetcode, codeforces.. for parsing respective website
+  - leetcode, codeforces, a2sv.. for parsing respective website
+- Each of the above folder contains a `{}.content.ts` file which is responsible for parsing the content of the website
 
-### Lib
+### API
 
 - Anything related to platform specific api requests
 - Separeted by the platform
   - leetcode, codeforces.. for platform specific api requests
   - github for github api requests
-  - a2sv for a2sv api requests (backend is hosted [here](a2sv-companion-backend.vercel.app))
+- Each of the above folder contains a `{}.api.ts` file which is responsible for parsing the content of the website
 
 ### services.ts and Services
 
 - Services are the main entry point for the companion background scripts
-- Background scripts, separated by platform are found in services folder
+- Background scripts, separated by platform are found in each folder with the name `{}.services.ts`
 
-### scripts.ts
+### messsage.ts
 
 - For message coordination between content and services, the `from` field is used to identify the `sender`
+- Each platform has its own message file with the name `{}.message.ts`
 
 ### main.ts and style.css
 
 - Popup script and css
-
-### update.py
-
-- Script to update the extension when a new version is released
-- New release is hosted at [here](https://a2sv.pythonanywhere.com/download)
 
 ## Project Structure
 
@@ -59,33 +55,41 @@
 │   ├── icons
 │   ├── index.html
 │   ├── manifest.json
-│   ├── update.py
-|
+│
 ├── src
-│   ├── content
-│   │   ├── codeforces
-│   │   ├── leetcode
-│   │   ├── auth.content.ts
-│   │   ├── leetcode.content.ts
-│   │   ├── codeforces.content.ts
+│   ├── leetcode
+│   │   ├── leetcode.api.ts
+│   │   ├── leetcode.content.ts
+│   │   ├── leetcode.services.ts
+│   │   ├── leetcode.types.ts
+│   │   ├── leetcode.message.ts
+│   │   ├── leetcode.utils.ts
+│   │   ├── leetcode.parseui.ts
 │   │
-│   ├── lib
-│   │   ├── codeforces
-│   │   ├── leetcode
-│   │   ├── github
-│   │   ├── a2sv
-│   │
-│   ├── services
-│   │   ├── auth.services.ts
-│   │   ├── leetcode.services.ts
+│   ├── codeforces
+│   │   ├── codeforces.api.ts
+│   │   ├── codeforces.content.ts
 │   │   ├── codeforces.services.ts
+│   │   ├── codeforces.types.ts
+│   │   ├── codeforces.message.ts
+│   │   ├── codeforces.utils.ts
+│   │   ├── codeforces.parseui.ts
+│   │
+│   ├── a2sv
+│   │   ├── a2sv.api.ts
+│   │   ├── a2sv.content.ts
+│   │   ├── a2sv.services.ts
+│   │   ├── a2sv.types.ts
+│   │   ├── parseui
+│   │   │   ├── new.ts
+│   │   │   ├── old.ts
+│   │   │   ├── common.ts
 │   │
 │   ├── utils
-│   │
+│   │   ├── readStorage.ts
+│   │
 │   ├── config.ts
-│   ├── event.ts
 │   ├── main.ts
-│   ├── scripts.ts
 │   ├── services.ts
 │   ├── style.css
 ```
