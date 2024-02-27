@@ -18,7 +18,7 @@ export const pushToHub = async (args: PushToHubType): Promise<string> => {
       language: args.language,
       link: args.questionUrl,
       in_contest: false,
-      submissionid: args.submissionId,
+      platform_submission_id: args.submissionId,
     }),
   });
   if (res.status == 200) return "Successfully Pushed Your Code";
