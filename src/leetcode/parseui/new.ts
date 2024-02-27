@@ -5,9 +5,8 @@ const getSubmitBtn = () => {
     document.querySelectorAll("button")
   ) as HTMLButtonElement[];
   const btn = btns.filter(
-    (btn) =>
-      // btn.lastChild.textContent === "Solution"
-      btn.getAttribute("data-e2e-locator") === "console-submit-button"
+    (btn) => btn.lastChild.textContent === "Solution"
+    // btn.getAttribute("data-e2e-locator") === "console-submit-button"
   )[0];
   return btn ?? null;
 };
@@ -17,6 +16,7 @@ const injectContent = (observer: MutationObserver, observe: () => void) => {
   const submitBtn = getSubmitBtn();
 
   const pushBtn = submitBtn.cloneNode(true) as HTMLButtonElement;
+  // pushBtn.setAttribute("data-e2e-locator", "push-to-sheets-btn");
   const timeField = document.createElement("input") as HTMLInputElement;
   pushBtn.style.opacity = "1";
   pushBtn.style.cursor = "pointer";
@@ -100,8 +100,8 @@ const injectContent = (observer: MutationObserver, observe: () => void) => {
   });
 
   observer.disconnect();
-  // parentNode = submitBtn.parentNode;
-  const parent = submitBtn.parentNode.parentNode;
+  const parent = submitBtn.parentNode;
+  // const parent = submitBtn.parentNode.parentNode;
 
   parent.insertBefore(timeField, submitBtn.nextSibling);
   parent.insertBefore(pushBtn, timeField.nextSibling);
