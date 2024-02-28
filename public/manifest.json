@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "A2SV Companion",
   "description": "A2SV Companion Browser Extension",
-  "version": "1.0",
+  "version": "1.0.1",
   "icons": {
     "16": "icons/icon_16.png",
     "32": "icons/icon_32.png",
@@ -39,18 +39,9 @@
       "run_at": "document_idle"
     }
   ],
-  "permissions": [
-    "storage",
-    "activeTab",
-    "clipboardRead",
-    "sidePanel",
-    "notifications",
-    "tabs"
-  ],
+  "permissions": ["storage"],
 
   "host_permissions": [
-    "https://api.github.com/*",
-    "https://github.com/*",
     "https://leetcode.com/*",
     "https://codeforces.com/*",
     "https://hub.a2sv.org/*"

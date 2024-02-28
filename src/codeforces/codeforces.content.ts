@@ -40,7 +40,7 @@ const hookSubmissionAnchors = () => {
   for (let row of solutionRows) {
     const cols = [].slice.call(row.children) as HTMLTableColElement[];
     const verdictCell = row.querySelector("span.verdict-accepted");
-    const solvers = cols[2].getElementsByTagName("a")
+    const solvers = cols[2].getElementsByTagName("a");
     let solver = "";
     for (let eachSolver of Array.from(solvers)) {
       if (eachSolver.innerText === codeforceHandle) {
@@ -57,12 +57,22 @@ const hookSubmissionAnchors = () => {
     const anchor = cols[0].getElementsByTagName("a")[0];
     const submissionId = anchor.getAttribute("submissionid");
     anchor.addEventListener("click", async () => {
-      await getSubmissionDetail(
-        submissionId,
-        codeforceHandle,
-        qUrl,
-        programmingLanguage
-      );
+      let retry = 1;
+      const injectingContent = async () => {
+        await getSubmissionDetail(
+          submissionId,
+          codeforceHandle,
+          qUrl,
+          programmingLanguage
+        );
+      };
+      try {
+        injectingContent();
+      } catch (e) {
+        if (retry > 3) return;
+        retry++;
+        setTimeout(injectingContent, 1000);
+      }
     });
   }
 };

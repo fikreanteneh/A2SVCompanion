@@ -22,6 +22,7 @@
     "@types/lodash": "^4.14.202",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
+    "cws-publish": "^2.1.1",
     "postcss": "^8.4.32",
     "postcss-loader": "^7.3.4",
     "postcss-preset-env": "^9.3.0",

@@ -16,6 +16,19 @@ export const getUserHandle = (): string => {
     .filter((x: HTMLAnchorElement) => x.href.includes("profile"))[0].innerText;
 };
 
+const getSourceCode = (element: HTMLDivElement): string => {
+  const lines = element
+    .getElementsByTagName("pre")[0]
+    .getElementsByTagName("code")[0]
+    .getElementsByTagName("ol")[0]
+    .getElementsByTagName("li");
+  let code: string[] = [];
+  for (let line of Array.from(lines)) {
+    code.push(line.outerText);
+  }
+  return code.join("\n");
+};
+
 export const getSubmissionDetail = async (
   submissionId: string,
   userHandle: string,
@@ -33,13 +46,17 @@ export const getSubmissionDetail = async (
     timeTaken.style.marginBottom = "5px";
     timeTaken.style.marginRight = "10px";
 
-    const pushBtn = copyBtn.cloneNode(true);
-    pushBtn.textContent = "Push to sheet";
+    // const pushBtn = copyBtn.cloneNode(true);
+    const pushBtn = document.createElement("button");
+    pushBtn.textContent = "Push to Hub";
     copyBtn.parentNode.appendChild(pushBtn);
 
     pushBtn.addEventListener("click", async () => {
       if (timeTaken.value == "") return;
-      const sourceCode = await navigator.clipboard.readText();
+      // const sourceCode = await navigator.clipboard.readText();
+      const sourceCode = getSourceCode(
+        copyBtn.parentNode.parentNode as HTMLDivElement
+      );
       try {
         chrome.runtime.sendMessage(
           {
@@ -56,7 +73,7 @@ export const getSubmissionDetail = async (
             alert(result.status);
             // (
             //   document.getElementsByClassName("close")[0] as HTMLAnchorElement
-            //   ).click();
+            // ).click();
           }
         );
       } catch (e) {
