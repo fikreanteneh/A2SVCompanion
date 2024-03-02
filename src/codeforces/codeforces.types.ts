@@ -65,28 +65,25 @@ export interface CodeforcesSubmission {
   points?: number;
 }
 
-export interface CodeforcesPushLastSubmission {
+export interface CodeforcesPushSubmission {
   from: string;
   type: string;
-  codeforcesHandle: string;
-}
-
-export interface CodeforcesPushSubmission extends CodeforcesPushLastSubmission {
   code: string;
   timeTaken: number;
-  questionUrl: string;
-  submissioId: number;
-  programmingLanguage: string;
-}
-
-
-
-export type CodeforcesPushType = {
-  codeforcesHandle: string;
-  timeTaken: number;
-  code: string;
-  questionUrl: string;
   submissionId: number;
-  programmingLanguage: string;
-  sendResponse: (response?: any) => void;
-};
+  language: string;
+  inContest: boolean;
+  tries: number;
+  questionUrl: string;
+}
+
+// export type CodeforcesPushType = {
+//   timeTaken: number;
+//   code: string;
+//   questionUrl: string;
+//   submissionId: number;
+//   language: string;
+//   inContest: boolean;
+//   tries: number;
+//   sendResponse: (response?: any) => void;
+// };

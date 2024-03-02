@@ -15,7 +15,6 @@ export const getSubmissions = async (codeforcesHandle: string) => {
 export const getLastSubmission = async (
   codeforcesHandle: string
 ): Promise<CodeforcesSubmission | null> => {
-  
   const submissions = await getSubmissions(codeforcesHandle);
 
   for (const submission of submissions) {
@@ -39,7 +38,10 @@ export const getSubmission = async (
   return null;
 };
 
-export const getTries = async (codeforcesHandle: string, submissionId: number) => {
+export const getTries = async (
+  codeforcesHandle: string,
+  submissionId: number
+) => {
   const submissions = await getSubmissions(codeforcesHandle);
 
   let contestId, problemIndex, creationTimeSeconds;
@@ -67,3 +69,16 @@ export const getTries = async (codeforcesHandle: string, submissionId: number) =
   return tries;
 };
 
+export const getSubmissionById = async (
+  submissinId: string,
+  csrf: string
+): Promise<any> => {
+  const result = await fetch("https://codeforces.com/data/submitSource", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: `submissionId=${submissinId}&csrf_token=${csrf}`,
+  });
+  return await result.json();
+};

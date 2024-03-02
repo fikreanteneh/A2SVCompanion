@@ -16,16 +16,21 @@ export interface LeetcodePushSubmission {
   from: string;
   type: string;
   timeTaken: number;
-  questionSlug: string;
   submissionId: number | null;
+  questionSlug: string;
+  inContest: boolean;
+  language: string;
+  tries: number;
+  code: string;
 }
 
-export type LeetcodePushType = {
-  timeTaken: number;
-  submissionId: number | null;
-  questionSlug: string;
-  // repo: string;
-  // folderPath: string;
-  // studentName: string;
-  sendResponse: (response?: any) => void;
-};
+// export type LeetcodePushType = {
+//   timeTaken: number;
+//   submissionId: number | null;
+//   questionSlug: string;
+//   inContest: boolean;
+//   language: string;
+//   tries: number;
+//   code: string;
+//   sendResponse: (response?: any) => void;
+// };

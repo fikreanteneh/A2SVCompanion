@@ -26,6 +26,7 @@
     {
       "js": ["codeforces.content.js"],
       "matches": [
+        "https://codeforces.com/*",
         "https://codeforces.com/problemset/status*",
         "https://codeforces.com/contest/*/my",
         "https://codeforces.com/contest/*/status",

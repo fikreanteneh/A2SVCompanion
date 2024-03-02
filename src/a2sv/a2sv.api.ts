@@ -17,7 +17,7 @@ export const pushToHub = async (args: PushToHubType): Promise<string> => {
       code: args.code,
       language: args.language,
       link: args.questionUrl,
-      in_contest: false,
+      in_contest: args.inContest,
       platform_submission_id: args.submissionId,
     }),
   });

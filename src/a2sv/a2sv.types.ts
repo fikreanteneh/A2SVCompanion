@@ -6,4 +6,5 @@ export type PushToHubType = {
   code: string;
   language: string;
   submissionId: string;
+  inContest: boolean;
 };

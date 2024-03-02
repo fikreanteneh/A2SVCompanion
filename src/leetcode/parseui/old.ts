@@ -1,5 +1,5 @@
-import { LeetcodeEvent } from "../leetcode.message";
-import { LeetcodeContentScript } from "../leetcode.message";
+import { LeetcodeContentScript, LeetcodeEvent } from "../leetcode.message";
+import { parseSubmission } from "./common";
 
 const injectContent = (observer: MutationObserver, observe: () => void) => {
   if (document.getElementById("push-to-sheets-btn")) return;
@@ -43,12 +43,25 @@ const injectContent = (observer: MutationObserver, observe: () => void) => {
     span.textContent = "Pushing...";
     pushBtn.disabled = true;
 
+    const submission = await parseSubmission(
+      window.location.pathname.split("/")[2]
+    );
+    if (!submission) {
+      alert("No Submission Found");
+      return;
+    }
+
     chrome.runtime.sendMessage(
       {
         from: LeetcodeContentScript,
         type: LeetcodeEvent.PUSH_LAST_SUBMISSION_TO_SHEETS,
-        timeTaken: +(timeField.value),
+        timeTaken: +timeField.value,
         questionSlug: window.location.pathname.split("/")[2],
+        inContest: false,
+        submissionId: submission.submissionId.toString(),
+        language: submission.language,
+        tries: submission.tries,
+        code: submission.code,
       },
       (result) => {
         alert(result.status);

@@ -16,9 +16,17 @@ export const getUserHandle = (): string => {
     .filter((x: HTMLAnchorElement) => x.href.includes("profile"))[0].innerText;
 };
 
+export const getCSFRToken = (): string => {
+  const content = document.getElementsByClassName(
+    "csrf-token"
+  )[0] as HTMLSpanElement;
+  return content.getAttribute("data-csrf");
+};
+
+
 const getSourceCode = (element: HTMLDivElement): string => {
   const lines = element
-    .getElementsByTagName("pre")[0]
+  .getElementsByTagName("pre")[0]
     .getElementsByTagName("code")[0]
     .getElementsByTagName("ol")[0]
     .getElementsByTagName("li");
@@ -28,6 +36,28 @@ const getSourceCode = (element: HTMLDivElement): string => {
   }
   return code.join("\n");
 };
+
+
+
+export const headerInjector = (header: HTMLTableRowElement) => {
+  const cols = [].slice.call(header.children) as HTMLTableColElement[];
+  cols[7].className = "top";
+  const pusherHeader = cols[5].cloneNode(true) as HTMLTableColElement;
+  pusherHeader.className = "top right";
+  pusherHeader.innerText = "A2SV Pusher";
+  header.appendChild(pusherHeader);
+}
+export const pusherInjector = (
+  row: HTMLTableRowElement,
+  cols: HTMLTableColElement[]
+) => {
+  
+};
+
+
+
+
+
 
 export const getSubmissionDetail = async (
   submissionId: string,
@@ -68,6 +98,7 @@ export const getSubmissionDetail = async (
             questionUrl,
             submissioId: parseInt(submissionId),
             programmingLanguage,
+            incontest: false,
           },
           (result) => {
             alert(result.status);

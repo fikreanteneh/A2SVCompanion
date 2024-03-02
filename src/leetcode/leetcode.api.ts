@@ -1,11 +1,14 @@
-import { LeetcodeSubmissionStatus, LeecodeSubmissionDetail } from './leetcode.types';
+import {
+  LeecodeSubmissionDetail,
+  LeetcodeSubmissionStatus,
+} from "./leetcode.types";
 
 export const leetcodeRequest = async (body: any) => {
-  const response = await fetch('https://leetcode.com/graphql', {
-    method: 'POST',
+  const response = await fetch("https://leetcode.com/graphql", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
     },
     body,
   });
@@ -23,7 +26,7 @@ export const getSubmissions = async (
   const graphQL = JSON.stringify({
     variables: { questionSlug: questionSlug, offset: 0, limit: 40 },
     query:
-      'query submissionList($offset: Int!, $limit: Int!, $lastKey: String, $questionSlug: String!, $lang: Int, $status: Int) { questionSubmissionList( offset: $offset limit: $limit lastKey: $lastKey questionSlug: $questionSlug lang: $lang status: $status ) { lastKey hasNext submissions {id status timestamp statusDisplay} } }',
+      "query submissionList($offset: Int!, $limit: Int!, $lastKey: String, $questionSlug: String!, $lang: Int, $status: Int) { questionSubmissionList( offset: $offset limit: $limit lastKey: $lastKey questionSlug: $questionSlug lang: $lang status: $status ) { lastKey hasNext submissions {id status timestamp statusDisplay} } }",
   });
 
   const data = await leetcodeRequest(graphQL);
@@ -44,7 +47,6 @@ export const getSubmissions = async (
 export const getLastAcceptedSubmissionId = (
   submissions: LeetcodeSubmissionStatus[]
 ): number | null => {
-
   for (let submission of submissions) {
     if (submission.statusDisplay === "Accepted") {
       return parseInt(submission.id);
@@ -60,7 +62,7 @@ export const getSubmissionDetails = async (
   const graphQL = JSON.stringify({
     variables: { submissionId: submissionId },
     query:
-      'query submissionDetails($submissionId: Int!) { submissionDetails(submissionId: $submissionId) { timestamp code lang { name } question { titleSlug title }} }',
+      "query submissionDetails($submissionId: Int!) { submissionDetails(submissionId: $submissionId) { timestamp code lang { name } question { titleSlug title }} }",
   });
 
   const data = (await leetcodeRequest(graphQL))
@@ -91,4 +93,3 @@ export const getTries = (submissions: LeetcodeSubmissionStatus[]) => {
 
   return minAccepted !== Infinity ? tries : 0;
 };
-
