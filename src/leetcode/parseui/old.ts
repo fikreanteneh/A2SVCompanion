@@ -43,32 +43,34 @@ const injectContent = (observer: MutationObserver, observe: () => void) => {
     span.textContent = "Pushing...";
     pushBtn.disabled = true;
 
-    const submission = await parseSubmission(
+    try {
+      const submission = await parseSubmission(
       window.location.pathname.split("/")[2]
-    );
-    if (!submission) {
-      alert("No Submission Found");
-      return;
-    }
-
-    chrome.runtime.sendMessage(
-      {
-        from: LeetcodeContentScript,
-        type: LeetcodeEvent.PUSH_LAST_SUBMISSION_TO_SHEETS,
-        timeTaken: +timeField.value,
-        questionSlug: window.location.pathname.split("/")[2],
-        inContest: false,
-        submissionId: submission.submissionId.toString(),
-        language: submission.language,
-        tries: submission.tries,
-        code: submission.code,
-      },
-      (result) => {
-        alert(result.status);
-        span.textContent = "Push Last Submission";
-        pushBtn.disabled = false;
+      );
+      if (!submission) {
+        alert("No Submission Found");
+        return;
       }
-    );
+
+      chrome.runtime.sendMessage(
+        {
+          from: LeetcodeContentScript,
+          type: LeetcodeEvent.PUSH_LAST_SUBMISSION_TO_SHEETS,
+          timeTaken: +timeField.value,
+          questionSlug: window.location.pathname.split("/")[2],
+          inContest: false,
+          submissionId: submission.submissionId.toString(),
+          language: submission.language,
+          tries: submission.tries,
+          code: submission.code,
+        },
+        (result) => {
+          alert(result.status); span.textContent = "Push Last Submission"; pushBtn.disabled = false;
+        }
+      );
+    } catch (e) {
+      alert(e.message); span.textContent = "Push Last Submission"; pushBtn.disabled = false;
+    }
   });
 
   observer.disconnect();

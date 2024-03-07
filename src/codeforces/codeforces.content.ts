@@ -83,11 +83,12 @@ const hookSubmissionAnchors = () => {
     const timeTaken = document.createElement("input");
     timeTaken.id = "time-taken";
     timeTaken.type = "number";
-    timeTaken.placeholder = "Minutes";
+    timeTaken.placeholder = "Min";
     timeTaken.style.marginRight = "5px";
-    timeTaken.style.maxWidth = "100px";
+    timeTaken.style.maxWidth = "5em";
 
     const pushBtn = document.createElement("button");
+    pushBtn.style.width = "6.2em"
     pushBtn.textContent = "Push";
 
     // pushCol.style.height = "100%";
@@ -102,6 +103,8 @@ const hookSubmissionAnchors = () => {
 
     pushBtn.addEventListener("click", async () => {
       if (timeTaken.value == "") return;
+      pushBtn.disabled = true;
+      pushBtn.textContent = "Pushing";
       try {
         const sourceCode = await getSubmissionById(submissionId, csrf);
         const tries = await getTries(codeforceHandle, +submissionId);
@@ -119,11 +122,16 @@ const hookSubmissionAnchors = () => {
           },
           (result) => {
             alert(result.status);
+            pushBtn.disabled = false;
+            pushBtn.textContent = "Push";
           }
         );
       } catch (e) {
         alert(e.message);
+        pushBtn.disabled = false;
+        pushBtn.textContent = "Push";
       }
+      
     });
 
     // anchor.addEventListener("click", async () => {
