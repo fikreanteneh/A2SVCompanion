@@ -1,36 +1,71 @@
-<!DOCTYPE html> 
-<html lang="en"> 
- 
-<head> 
-  <meta charset="UTF-8" /> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <title>Document</title> 
-</head> 
- 
-<body class="text-white bg-gray-800"> 
-  <div class="shadow-lg rounded-lg p-6 font-size:1rem;"> 
-    <div x-show="loggedIn" class="text-center flex flex-col justify-center items-center gap-2" id="hubsuccess"> 
-      <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 48 48"> 
-        <circle cx="24" cy="24" r="21" fill="#4caf50" /> 
-        <path fill="#ccff90" d="M34.6 14.6L21 28.2l-5.6-5.6l-2.8 2.8l8.4 8.4l16.4-16.4z" /> 
-      </svg> 
-      <p class="text-green-500 font-semibold" style="text-align: center;">You are Logged in to A2SVHub.</p> 
-    </div> 
-    <div x-show="!loggedIn" class="text-center flex flex-col justify-center items-center gap-2" id="huberror"> 
-      <svg xmlns="http://www.w3.org/2000/svg" width="3em" height="3em" viewBox="0 0 26 26"> 
-        <path fill="currentColor" 
-          d="M24.875 0a1 1 0 0 0-.594.281l-1.656 1.656c-2.204-1.59-5.261-1.305-7.313.657c0 .076-.855.91-1.624 1.656l-.97-.969a1 1 0 0 0-.812-.312a1 1 0 0 0-.125.031a1 1 0 0 0-.5 1.719L13.562 7l-3.28 3.281a1.016 1.016 0 1 0 1.437 1.438L15 8.438L17.563 11l-3.282 3.281a1.016 1.016 0 1 0 1.438 1.438L19 12.438l2.281 2.28a1.016 1.016 0 1 0 1.438-1.437l-.969-.969l1.656-1.624c1.96-1.96 2.159-5.008.625-7.282L25.72 1.72A1 1 0 0 0 24.875 0M3.906 10.969a1 1 0 0 0-.125.031a1 1 0 0 0-.5 1.719l.969.969l-1.656 1.624c-1.96 1.96-2.159 5.008-.625 7.282L.28 24.28a1.016 1.016 0 1 0 1.44 1.44l1.656-1.657c2.204 1.592 5.261 1.306 7.313-.656c0-.076.855-.91 1.624-1.656l.97.969a1.016 1.016 0 1 0 1.437-1.438l-10-10a1 1 0 0 0-.813-.312z" /> 
-      </svg> 
-      <p class="text-red-500 font-semibold" style="text-align: center;">A2SV Hub is not detected! Please login and 
-        refresh.</p> 
-      <a href="https://hub.a2sv.org" class="text-blue-200" target="_blank">Login | A2SV Hub</a> 
-    </div> 
- 
-    <p class="py-5" style="font-size:0.8rem; text-align:center;margin-top:2rem;">By <a 
-        href="https://www.linkedin.com/in/fikremariamanteneh/" target="_blank">Fikremariam Anteneh</a></p> 
-  </div> 
- 
-  <script src="main.js"></script> 
-</body> 
- 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body class="p-0 py-5 text-white bg-gray-800 rounded-lg">
+    <div class="font-size:1rem;">
+      <div
+        x-show="loggedIn"
+        class="flex flex-col items-center justify-center gap-2 text-center"
+        id="hubsuccess"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="3em"
+          height="3em"
+          viewBox="0 0 48 48"
+        >
+          <circle cx="24" cy="24" r="21" fill="#4caf50" />
+          <path
+            fill="#ccff90"
+            d="M34.6 14.6L21 28.2l-5.6-5.6l-2.8 2.8l8.4 8.4l16.4-16.4z"
+          />
+        </svg>
+        <p class="font-semibold text-green-500" style="text-align: center">
+          You are Logged in to A2SVHub.
+        </p>
+      </div>
+      <div
+        x-show="!loggedIn"
+        class="flex flex-col items-center justify-center gap-2 text-center"
+        id="huberror"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="3em"
+          height="3em"
+          viewBox="0 0 26 26"
+        >
+          <path
+            fill="currentColor"
+            d="M24.875 0a1 1 0 0 0-.594.281l-1.656 1.656c-2.204-1.59-5.261-1.305-7.313.657c0 .076-.855.91-1.624 1.656l-.97-.969a1 1 0 0 0-.812-.312a1 1 0 0 0-.125.031a1 1 0 0 0-.5 1.719L13.562 7l-3.28 3.281a1.016 1.016 0 1 0 1.437 1.438L15 8.438L17.563 11l-3.282 3.281a1.016 1.016 0 1 0 1.438 1.438L19 12.438l2.281 2.28a1.016 1.016 0 1 0 1.438-1.437l-.969-.969l1.656-1.624c1.96-1.96 2.159-5.008.625-7.282L25.72 1.72A1 1 0 0 0 24.875 0M3.906 10.969a1 1 0 0 0-.125.031a1 1 0 0 0-.5 1.719l.969.969l-1.656 1.624c-1.96 1.96-2.159 5.008-.625 7.282L.28 24.28a1.016 1.016 0 1 0 1.44 1.44l1.656-1.657c2.204 1.592 5.261 1.306 7.313-.656c0-.076.855-.91 1.624-1.656l.97.969a1.016 1.016 0 1 0 1.437-1.438l-10-10a1 1 0 0 0-.813-.312z"
+          />
+        </svg>
+        <p class="font-semibold text-red-500" style="text-align: center">
+          A2SV Hub is not detected! Please login and refresh.
+        </p>
+        <a href="https://hub.a2sv.org" class="text-blue-200" target="_blank"
+          >Login | A2SV Hub</a
+        >
+      </div>
+
+      <!-- <p
+        class="py-5"
+        style="font-size: 0.8rem; text-align: center; margin-top: 2rem"
+      >
+        By
+        <a
+          href="https://www.linkedin.com/in/fikremariamanteneh/"
+          target="_blank"
+          >Fikremariam Anteneh</a
+        >
+      </p> -->
+    </div>
+
+    <script src="main.js"></script>
+  </body>
 </html>

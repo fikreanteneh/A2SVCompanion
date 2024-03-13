@@ -25,3 +25,21 @@ export const pushToHub = async (args: PushToHubType): Promise<string> => {
   const response = await res.text();
   return response;
 };
+
+export const questionExist = async (url: string): Promise<boolean> => {
+  try{
+    const response = await fetch(config.a2svhub.exist, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        url,
+      }),
+    });
+    const exist = await response.json();
+    return exist.exists;
+  } catch {
+    return false
+  }
+};

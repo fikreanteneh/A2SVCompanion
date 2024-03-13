@@ -37,7 +37,7 @@ import {
 //   );
 // });
 
-const hookSubmissionAnchors = () => {
+const hookSubmissionAnchors = async () => {
   const solutionRows = getSubmissionRows();
   if (!solutionRows.length) return;
   headerInjector(
@@ -58,6 +58,11 @@ const hookSubmissionAnchors = () => {
         break;
       }
     }
+    const qUrl = cols[3].getElementsByTagName("a")[0].href;
+    // const exist = await questionExist(qUrl);
+    // if (!exist) {
+    //   continue;
+    // }
     cols[7].className = "memory-consumed-cell";
 
     const pushCol = cols[4].cloneNode(true) as HTMLTableColElement;
@@ -68,41 +73,45 @@ const hookSubmissionAnchors = () => {
       continue;
     }
 
-    const qUrl = cols[3].getElementsByTagName("a")[0].href;
     const programmingLanguage = cols[4].innerText;
     const anchor = cols[0].getElementsByTagName("a")[0];
     const submissionId = anchor.getAttribute("submissionid");
 
-    // const container = document.createElement("span");
-    // container.style.display = "flex";
-    // container.style.alignItems = "center";
-    // container.style.justifyContent = "center";
-    // container.style.height = "100%";
-    // container.className = "dark";
+    const container = document.createElement("span");
+    container.style.display = "flex";
+    container.style.alignItems = "center";
+    container.style.justifyContent = "center";
+    container.className = "dark";
+    container.style.backgroundColor = "inherit";
 
     const timeTaken = document.createElement("input");
     timeTaken.id = "time-taken";
     timeTaken.type = "number";
-    timeTaken.placeholder = "Min";
+    timeTaken.placeholder = "Time";
     timeTaken.style.marginRight = "5px";
     timeTaken.style.maxWidth = "5em";
 
     const pushBtn = document.createElement("button");
-    pushBtn.style.width = "6.2em"
+    pushBtn.style.width = "6.2em";
     pushBtn.textContent = "Push";
 
-    // pushCol.style.height = "100%";
     // pushCol.style.display = "flex";
     // pushCol.style.alignItems = "center";
     // pushCol.style.justifyContent = "center";
+    // pushCol.style.height = "100%";
 
-    pushCol.appendChild(timeTaken);
-    pushCol.appendChild(pushBtn);
+    container.appendChild(timeTaken);
+    container.appendChild(pushBtn);
+
+    pushCol.appendChild(container);
 
     row.appendChild(pushCol);
 
     pushBtn.addEventListener("click", async () => {
-      if (timeTaken.value == "") return;
+      if (timeTaken.value == "") {
+        alert("Please insert the time taken in minutes");
+        return;
+      }
       pushBtn.disabled = true;
       pushBtn.textContent = "Pushing";
       try {
@@ -131,7 +140,6 @@ const hookSubmissionAnchors = () => {
         pushBtn.disabled = false;
         pushBtn.textContent = "Push";
       }
-      
     });
 
     // anchor.addEventListener("click", async () => {
